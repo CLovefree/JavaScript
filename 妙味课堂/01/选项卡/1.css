@@ -107,7 +107,7 @@ body{
 	float: left;
 	padding-left: 4px;
 	padding-top: 5px;
-	background: linear-gradient(to bottom,#D4CDCD,#f5f5f5);
+	background: linear-gradient(to bottom,#d4cdcd,#f5f5f5);
 	box-shadow: #ddd 3px 4px 10px 2px;
 }
 #tab .content .box .pic_list{
