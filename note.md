@@ -187,9 +187,9 @@ function函数在ECMAScript中是**对象**，不是数据类型
 
 ①从逻辑角来看，null值表示一个*空对象指针*，这也是typeof操作符检测null值会**返回“object”**的原因.
 
-②如果定义的变量准备在将来用来保存对象，那么最好初始化为null，而不是其他
+②如果定义的变量准备在将来用来保存对象，那么最好初始化为null，而不是其他；
 
-③实际上，undefined是派生自null值得，所以他们的相等性测试返回true
+③实际上，undefined是派生自null值的，所以他们的相等性测试返回true；
 
 ④尽管二者有这样的关系，但是用法却完全不同。初始化undefined没必要，初始化null却是有必要的；这可以提现null作为空对象指针惯例，也进一步*区分*null和undefined。
 
@@ -721,7 +721,251 @@ ECMA-262规定了一组语句（流控制语句），从本质看，语句定义
 
 ##### 6.1 if语句
 
+if(condition)statament1 else statement2
+
+##### 6.2 do-while语句
+
+后测试循环语句：循环体内的代码至少被执行一次
+
+```
+do{
+statement
+}while(expression)；
+```
+
+##### 6.3 while语句
+
+前测试循环语句
+
+```
+var i=0;
+while(i<10){
+            i+=2;
+}
+```
+
+##### 6.4 for语句
+
+前测试循环语句
+
+```
+var num = 10; 
+        for (var i=1; i < num; i++) {   
+        alert(i); 
+```
+
+使用while循环做不到的，使用for循环同样做不到
+
+for循环只是把循环有关的代码集中在一个位置
+
+在循环内部定义的变量，在外部也可以访问到
+
+```
+for（；；）{           //将初始化表达式、控制表达式、循环后表达式都省略，则无限循环
+dosomething
+}
+```
+
+##### 6.5 for-in语句？？？
+
+精准的迭代语句，用来枚举对象的属性
+
+```javascript
+ for (var propName in window) {
+             document.write(propName);
+             document.write("<br />");
+        }
+```
+
+##### 6.6 label语句？？？？
+
+在代码中添加标签，以便将来使用
+
+```
+label：statement
+```
+
+##### 6.7 break和continue语句
+
+在循环中精确地控制代码的执行
+
+```javascript
+var num = 0;      
+        for (var i=1; i < 10; i++) {
+            if (i % 5 == 0) {
+                break;
+            }
+            num++;
+        }
+        alert(num);    //4
+```
+
+变量num从0开始，用于记录循环的次数
+
+i=5时，循环执行了4次，break语句会立即退出循环，在num自增之前就退出，所以num=4；
+
+```javascript
+var num = 0;    
+        outermost:
+        for (var i=0; i < 10; i++) {
+             for (var j=0; j < 10; j++) {
+                if (i == 5 && j == 5) {
+                    break outermost;
+                }
+                num++;
+            }
+        }   
+        alert(num);    //55
+```
+
+break语句退出内部循环，也退出外部循环
+
+**break和continue语句都可以与label语句联合使用，从而返回代码中特定的位置；多发生在循环嵌套的情况下；**
+
+outermost标签标示外部的for循环；要返回到的标签
+
+```javascript
+var num = 0;    
+        outermost:
+        for (var i=0; i < 10; i++) {
+             for (var j=0; j < 10; j++) {
+                if (i == 5 && j == 5) {
+                    continue outermost;
+                }
+                num++;
+            }
+        }   
+        alert(num);    //95
+```
+
+continue语句退出内部循环，执行外部循环
+
+##### 6.8 with语句//大型应用程序，不建议使用
+
+将代码的作用域设置到一个特定对象中
+
+目的：简化多次编写同一个对象的工作
+
+```javascript
+with(location){
+            var qs = search.substring(1);
+            var hostName = hostname;    
+            var url = href;
+        }
+```
+
+相当于
+
+```javascript
+var qs = location.search.substring(1);
+var hostName = location.hostname;    
+var url =location. href;
+```
+
+使用with语句关联了location对象
+
+##### 6.9 switch语句 
+
+流控制语句
+
+switch语句中的每一种情形case的含义：如果表达式等于这个值value，则执行后面的语句statement；
+
+break语句会导致代码执行流跳出switch语句，避免同时执行多个case;
+
+如果要省略break，表示，混合几种情形，最好添加注释
+
+```javascript
+ var i = 25;   
+        switch (i) {
+            case 25: 
+                /* falls through */
+            case 35: 
+                alert("25 or 35");
+                break;
+            case 45: 
+                alert("45");
+                break;
+            default: 
+                alert("Other");
+        }
+```
+
+case的值不一定是常量，可以是变量，甚至是表达式
+
+#### 7.函数
+
+```javascript
+function functionName（arg0,arg1.arg2,.......argN){
+      statements
+}
+```
+
+```javascript
+function sayHi(name, message) {
+       alert("Hello " + name + ", " + message);
+ }
+sayHi("Nicholas", "how are you today?");
+```
+
+- 声明函数
 
 
+- 调用函数
+- 圆括号内是参数，多个之间用逗号隔开
+
+**reture语句实现返回值;**
+
+```javascript
+function diff(num1, num2) {
+            if (num1 < num2) {
+                return num2 - num1;
+            } else {
+                return num1 - num2;
+            }
+        }
+        var result = diff(7, 10);
+        alert(result);
+```
+
+执行完return语句后会立即停止并退出，return后的任何代码永远不会被执行；
+
+当return不带有任何返回值时，函数停止执行后将返回undefined；一般用在需要提前停止函数执行而又不需要返回值的情况下。
+
+**要么让函数始终都有返回值，要么永远不要返回值，以免给调试代码带来不便**
+
+##### 7.1 理解参数
+
+ECMAScript中的参数在内部是用一个数组来表示的；
+
+这个数组可以不包含元素，也可以包含多个元素
+
+- 命名的参数不是必须的
+- 在函数体内可以通过*arguments对象*来访问这个参数，从而获得传递给函数的每一个参数；arguments[0]→第一个元素，arguments[1]→第二个元素；
+- length属性确定传递进来多少个参数
 
 
+```
+function doAdd() {
+            if(arguments.length == 1) {
+                alert(arguments[0] + 10);
+            } else if (arguments.length == 2) {
+                alert(arguments[0] + arguments[1]);
+            }
+        }
+        
+        doAdd(10);        //20
+        doAdd(30, 20);    //50
+```
+
+##### 7.2 没有重载
+
+两个名字相同的函数，后定义的函数覆盖新定义的函数
+
+##第四章：变量、作用域和内存问题
+
+ECMAScript变量可能包含两种不同数据类型的值：基本类型值和引用类型值
+
+- 基本类型值
+- ​
+- 引用类型值
+- 保存在来那个两种

@@ -63,17 +63,6 @@
 
 ## 第二部分-案例2
 
-### 匿名函数
-
-- window.onload=function(){
-
-  oDiv.onmouseover=toGreen;
-
-  }
-
-- function后面括号前面不加函数名
-
-- 调用函数没加括号
  ### 收缩展开菜单
 
 - 效果思路
@@ -143,3 +132,18 @@
   - clearTimeout
 
 ###数码时钟
+
+- 获取系统时间
+
+  - date对象
+
+  - getHours/getMinutes/getSeconds
+
+    ```
+    var oDate=new Date();
+    alert(oDate.getHours);
+    ```
+
+- 显示系统时间
+
+- ​
