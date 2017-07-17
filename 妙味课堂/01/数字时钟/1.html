@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数码时钟</title>
+	<style type="text/css">
+		body{
+			background-image:repeating-linear-gradient(
+				to top,#C5F79C,#A9DE7E 1px);
+			font-size: 40px;
+			color: #fff;
+		}
+	</style>
+	<script type="text/javascript">
+	window.onload=function()
+	{
+		var oBtn=document.getElementById('btn1');
+		var aImg=document.getElementByTagName('img');
+		var i=0;
+		oBtn.onclick=function()
+		{
+			var oDate=new Date();
+			var str=oDate.getHours()+oDate.getMinutes()+oDate.getSeconds();
+			alert(str);
+		};
+	};
+	</script>
+</head>
+<body>
+	<input id="btn1" type="button" name="" value="更新时间">
+	<img src="images/0.png">
+	<img src="images/0.png">
+	点
+	<img src="images/0.png">
+	<img src="images/0.png">
+	分
+	<img src="images/0.png">
+	<img src="images/0.png">
+</body>
+</html>

@@ -123,4 +123,23 @@
 - 头部标签：改变className
 - 内容:改变display
 
-# #
+###简易日历
+
+- innerHTML；支持内部标签
+- 数组的使用
+- index索引值？怎么理解？
+
+### 定时器
+
+- 开启定时器
+
+  - 间隔型   setInterval（  函数，时间）//不断重复
+  - 延时型   setTimeout(  函数，时间 )//只执行一次
+
+- 停止定时器
+
+  - clearInterval
+
+  - clearTimeout
+
+###数码时钟
