@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>收缩展开百度输入法</title>
+	<style type="text/css">
+	p,ul,li,div{
+		margin: 0;
+		padding: 0;
+	}
+	#box{
+		font-size: 12px;
+		color: #00c;
+		width: 58px;
+		margin: 0 auto;
+	}
+	p{
+		width: 55px;
+		height: 24px;
+		line-height: 24px;
+		padding-left: 3px;
+		background: url(ico.gif) no-repeat center right;
+	}
+	ul{
+		width: 56px;
+		border:1px solid #9a99ff;
+		display: "";
+	}
+	a{
+		text-decoration: none;
+		display: block;
+		height: 24px;
+		line-height: 24px;
+		text-align: center;
+		color: #00c
+	}
+	li{
+		list-style: none;
+	}
+	a:hover{
+		background: #d9e1f6;
+	}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oBtn=document.getElementById('btn');
+			var oUl=document.getElementById('ull');
+			oBtn.onclick=function()
+			{
+				if(oUl.style.display=='block')
+				{
+					oUl.style.display=='none';
+				}
+				else(oUl.style.display=='none')
+				{
+					oUl.style.display=='display';
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<p id="btn">输入法</p>
+		<ul id="ull">
+			<li><a href="#">手写</a></li>
+			<li><a href="#">拼音</a></li>
+			<li><a href="#">关闭</a></li>
+		</ul>
+	</div>
+</body>
+</html>
