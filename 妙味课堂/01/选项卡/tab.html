@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>选项卡布局 - 妙味课堂 - www.miaov.com</title>
+<link rel="stylesheet" type="text/css" href="1.css">
+<script type="text/javascript">
+window.onload=function()
+{
+    var oTab=document.getElementById('tab');
+    var aLi=getByClass(oTab, 'nav')[0].getElementsByTagName('li');
+    var aA=oTab.getElementsByTagName('ul')[0].getElementsByTagName('a');
+    var aDiv=getByClass(oTab, 'box');
+    var i=0;
+    
+    aDiv[0].style.display='block';
+    
+    for(i=0; i<aLi.length; i++)
+    {
+        aLi[i].index=i;
+        aLi[i].onclick=function()
+        {
+            for(i=0; i<aLi.length; i++)
+            {
+                aLi[i].className='';
+                aDiv[i].style.display='none';
+            }
+            this.className='active';
+            aDiv[this.index].style.display='block';
+        };
+        aA[i].onfocus=function(){this.blur();};
+    }
+};
+function getByClass(oParent, sClassName)
+{
+    var aElm=oParent.getElementsByTagName('*');
+    var aArr=[];
+    for(var i=0; i<aElm.length; i++)
+    {
+        if(aElm[i].className==sClassName)
+        {
+            aArr.push(aElm[i]);
+        }
+    }
+    return aArr;
+}
+</script>
+
+</head>
+
+<body>
+
+<div id="tab">
+    <div class="nav">
+        <ul>
+            <li class="active"><a href="#">HTML</a></li>
+            <li><a href="#">CSS</a></li>
+            <li><a href="#">JavaScript</a></li>
+        </ul>
+        <a class="more" href="http://www.w3school.com.cn/">>>更多</a>
+    </div>
+    <!-- 导航结束 -->
+    <div class="content">
+    <!-- 第一部分 -->
+        <div class="box" style="display: block;">
+            <div class="pic"><a href="http://www.w3school.com.cn/html/index.asp" alt="HTML"><img src="images/1.jpg"></a></div>
+            <ul class="pic_list">
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">HTML解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">HTML解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">HTML解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+            </ul>
+        </div>
+        <!-- 第二部分 -->
+        <div class="box"  style="display: none;">
+            <div class="pic"><a href="http://www.w3school.com.cn/html/index.asp" alt="CSS"><img src="images/2.jpg"></a></div>
+            <ul class="pic_list">
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">CSS解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">CSS解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">CSS解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+            </ul>
+        </div>
+        <!-- 第三部分 -->
+        <div class="box"  style="display: none;">
+            <div class="pic"><a href="http://www.w3school.com.cn/html/index.asp" alt="JavaScript"><img src="images/3.jpg"></a></div>
+            <ul class="pic_list">
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">JavaScript解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">JavaScript解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+                <li>
+                    <h2>
+                    <a href="http://www.w3school.com.cn/html/index.asp">JavaScript解答</a>
+                    <span>w3c</span>
+                    </h2>
+                    <p>点击：222 20177.17</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
