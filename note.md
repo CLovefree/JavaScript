@@ -14,6 +14,8 @@
 
 - [x] ？？？位操作符中的32位符号
 - [ ] 字符编码？比较字符编码"23"<"3"
+- [ ] 4.2.1延长作用域链
+- [ ] 5.2.8forEach（）
 
 ---
 
@@ -965,7 +967,466 @@ function doAdd() {
 
 ECMAScript变量可能包含两种不同数据类型的值：基本类型值和引用类型值
 
-- 基本类型值
-- ​
+- 基本类型值:源自五种基本数据类型
+  保存在变量中的实际的值
 - 引用类型值
-- 保存在来那个两种
+  保存在内存中的对象
+  可以为其添加、改变、删除属性和方法
+- 复制变量值：复制后是独立的还是引用了同一个对象
+- 传递参数
+- *二者的不同*
+
+##### 检测类型
+
+typeof：基本数据类型还是object对象
+
+instanceof操作符:什么类型的对象！！！
+
+alert（person instanceof Object）；//变量person是Object吗？
+
+##### 执行环境和作用域
+
+```javascript
+var color = "blue"; 
+function changeColor(){
+    var anotherColor = "red";     
+    function swapColors(){
+        var tempColor = color;
+        var tempColor = anotherColor;
+        color = anotherColor;
+        alert("Color is now " + tempColor);    //color, anotherColor, and tempColor可以访问到
+    }
+alert("Color is now " +color);
+    //color and anotherColor可以访问到，tempColor不可以
+    swapColors();
+} alert("123"); changeColor();
+//这里只能访问color
+//顺序123→blue→red
+```
+
+![作用域链](context.png)
+
+*内部环境可以通过作用域链访问所有的外部环境，但是外部环境不能方位内部环境中的任何变量和函数*
+
+##### 延长作用域链
+
+？？？？？
+
+- try-catch语句的catch
+
+- with语句
+
+#####没有块级作用域
+- if语句中的声明变量会将变量添加到当前的执行环境中，而不是if语句后销毁
+- for语句创建的变量也是依旧存在在循环外部的执行环境中
+- 使用var声明的变量自动被添加到最接近的环境中。函数内部：函数的局部环境；with语句：函数环境；没有var声明：全局环境
+- 向上逐级查询给定名字匹配的标识符
+#####垃圾收集机制
+- 找出那些不再使用的变量，然后释放其占用的内存
+- 时间间隔
+- 标记清除：加上标记然后回收
+- 性能问题：确保占用最少的内存让页面获得最好的性能
+- 为执行中的代码只保存必要的数据
+  *解除引用*:一旦数据不再有用，将其值设置为null来释放引用
+##第五章：引用类型
+
+引用类型是一种数据结构，用于将数据和功能组织在一起
+有时也被称为对象定义，因为它们描述的视一类对象所具有的属性和方法
+
+##### 5.1 object类型
+
+创建：
+
+- 使用new操作符后跟Object构造函数
+
+  ```javascript
+  var person = new Object();
+          person.name = "Nicholas";
+          person.age = 29;
+  ```
+
+- 对象字面量语法**倾向*
+
+  ```javascript
+  var person = {
+              name : "Nicholas",
+              age : 29
+          };
+  ```
+
+**用逗号来分隔不同的属性；最后一个属性后不加逗号！**
+
+访问属性：
+
+- 点表示法：推荐
+
+- 方括号表示法：用变量来访问属性
+
+  ```javascript
+  var propertyName=“name”；
+  alert(person[propertyName]);
+  ```
+
+##### 5.2 Array类型
+
+###### 创建数组：
+
+- 使用Array构造函数
+
+  var colors=new Array（）；
+
+  var colors=new Array（20）；----创建包含20项的数组
+
+  var colors=Array（"red","green","black"）；----可以省略new
+
+- 数组字面量法
+
+  var colors=["red","green","black"]----创建包含三个字符串的数组
+
+  var colors=[]----创建空数组
+
+  *注意*：最后一项不加逗号
+
+###### 读取和设置数组：
+
+- 使用方括号并提供基于0 的索引值
+
+  var colors=["red","green","black"]；
+
+  alert(colors[0]);----显示第一项
+
+  colors[2]="black";----修改第三项
+
+  colors[3]="brown";----新增第四项
+
+- 数组的length属性可以获得数组的项数，**并且从末尾移除或者添加新项；**
+
+  var colors=["red","green","black"]；
+
+  alert(colors.length);------3
+
+  colors.length=2;--------数组由三项变为两项，"black"被移除
+
+  alert(colors.[2]);-----------undefined
+
+  *添加新项*
+
+```javascript
+var colors = ["red", "blue", "green"];    //creates an array with three strings
+colors[colors.length] = "black";          //add a color
+colors[colors.length] = "brown";          //add another color
+现在的数组alert(colors)；
+结果为red,blue,green,black,brown
+```
+**明白这个关系** ：索引和length
+
+由于数组最后一项的索引始终是length-1，因此下一项的位置就是length。
+
+color[99]="black";在位置99添加颜色
+
+alert(colors.length);//100
+
+中间的将返回undefined
+
+###### 1.检测数组
+
+确定对象是不是数组
+
+- *instanceof*操作符-----------一个网页或者一个全局作用域而言
+
+- *Array.isArray()*方法---------------不管在哪个全局执行环境中创建
+
+  在部分未支持的浏览器中使用参考 22章
+
+```javascript
+if(value instanceof Array){
+//对数组执行某些操作
+}
+if(Array.isArray(value){
+//对数组执行某些操作
+}
+```
+
+###### 2.转换方法
+
+- *toLocaleString()*
+
+- *toString()*-----------返回字符串
+
+- *valueOf()*-----------返回还是数组
+```javascript
+var colors = ["red", "blue", "green"];    //create
+alert(colors.toString());    //red,blue,gree
+alert(colors.valueOf());     //red,blue,gree
+alert(colors);               //red,blue,green
+```
+alert要接受字符串参数，会自动在后台调用 toString（）方法
+
+以上三项默认以逗号分隔,
+
+- *join()方法*
+
+```javascript
+var colors = ["red", "green", "blue"];
+alert(colors.join(","));      //red,green,blue
+alert(colors.join("||"));     //red||green||blue
+```
+
+###### 3.栈方法
+
+让数组的行为类似其他数据结构的方法；可以限制插入和删除项的数据结构；LIFO**后进先出**
+
+- *push()和pop()*方法:推入添加/末尾移除并返回移除项的值
+
+```javascript
+var colors = new Array();                      //create an array
+var count = colors.push("red", "green");    //推入一项
+ alert(count);  //2    
+ count = colors.push("black"); //推入另一项
+ alert(count);  //3      
+var item = colors.pop();        //取得最后一项
+ alert(colors.length);  //2
+```
+
+###### 4.队列方法
+
+访问规则：FIFO**先进先出**
+
+- *push()和shift()*方法:推入添加/第一项移除并返回
+
+```javascript
+var colors = new Array();           //create an array
+var count = colors.push("red", "green"); //推入两项
+alert(count);  //2
+count = colors.push("black");  //推入另一项； //3
+var item = colors.shift();   //取得第一项
+alert(item);   //"red"
+alert(colors.length);  //2
+```
+
+数组中各项顺序为：black、*red、green*
+
+###### 5.重排序方法
+
+- *reverse（）*-------反转数组顺序
+- *sort（）*--------升序（根据字符串的结果，结果"10"位于"5"的前面）
+
+**那怎么实现排序呢？**
+
+sort()方法接收一个*比较函数*来作为*参数*，sort()本身对于返回值1，-1，0做出相应的动作让两数字调换位置；
+
+下例是**sort()得到的参数为正数时才交换两个值的顺序，否则不交换**。
+
+```javascript
+ function compare(value1, value2) {
+            if (value1 < value2) {
+                return -1;
+            } else if (value1 > value2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        var values = [0, 1, 5, 10, 15];
+        values.sort(compare);
+        alert(values);    //0,1,5,10,15
+```
+
+以上例子实现了升序，要实现降序则交换return的-1和1即可
+
+*compare()比较函数适用于大多数数据类型*；
+
+对于数据类型或者valueof()方法会返回数值类型的，也可以用减法比较函数
+
+```javascript
+function compare(value1, value2) {
+            if (value2 - value1) 
+              }
+```
+
+###### 6.操作方法
+
+- *concat()*:基于当前数组中的所有项创建一个新数组
+
+  - 没有传递参数，则复制并返回副本
+  - 传递的视一个或多个数组，则添加到结果数组中
+  - 如果不是数组，就简单加到结果数组的末尾
+
+- *slice()*：基于当前数组中的一个或多个项创建一个新数组
+
+  参数：返回项的起始位置和结束位置——不包含结束位置的项
+```javascript
+var colors = ["red", "green", "blue", "yellow", "purple"];
+          var colors2 = colors.slice(1);
+          var colors3 = colors.slice(1,4);
+          alert(colors2);   //green,blue,yellow,purple
+          alert(colors3);   //green,blue,yellow
+```
+
+- *splice()*：像数组中部插入项
+  - 删除：要删除第一项的位置和要删除的项数
+  - 插入：起始位置、0、要插入的项数
+  - 替换：起始位置、要删除的项数、要插入的项数
+
+```javascript
+var colors = ["red", "green", "blue"];
+var removed = colors.splice(0,1); //删除第一项
+        alert(colors);     //green,blue
+        alert(removed);    //red - one item array   
+        removed = colors.splice(1, 0, "yellow", "orange");  //从位置1插入两项
+        alert(colors);     //green,yellow,orange,blue
+        alert(removed);    //empty array
+
+        removed = colors.splice(1, 1, "red", "purple");    //插入两项，替换一项，从位置1
+        alert(colors);     //green,red,purple,orange,blue
+        alert(removed);    //yellow -返回的数组只包含一项
+```
+
+*返回值为数组* 包含从原始数组中删除的项！！！如果没有项则返回空数组
+
+- 三种方法总结
+
+  - 相同点：三种方法都将返回一个数组
+
+  - 不同点：
+
+    contac()、slice()方法不影响原始数组，将返回新的根据方法创建的数组
+
+    splice()方法将在原始数组上增减，返回的为改变的项，原始数组也成为了新的改变后的数组
+
+###### 7.位置方法
+
+- *indexOf()* ：从开头（位置0）向后查找
+
+- *lastindexOf()*：从末尾开始向前查找
+
+  参数：要查找的项和表示查找起点位置的索引（可选）
+
+  返回值：查找项在数组的**位置**,没有找到返回-1
+
+```javascript
+var numbers = [1,2,3,4,5,4,3,2,1];
+        
+        alert(numbers.indexOf(4));        //3
+        alert(numbers.lastIndexOf(4));    //5
+        
+        alert(numbers.indexOf(4, 4));     //5
+        alert(numbers.lastIndexOf(4, 4)); //3       
+
+        var person = { name: "Nicholas" };
+        var people = [{ name: "Nicholas" }];
+        var morePeople = [person];
+        
+        alert(people.indexOf(person));     //-1
+        alert(morePeople.indexOf(person)); //0
+```
+
+###### 8.迭代方法
+每个方法接收两个参数：要在每一项上运行的*函数*（接收3个参数：数组项的值，该项在数组中的位置，数组对象本身）和（可选的）*运行该函数的作用域对象*——影响this的值
+
+5个迭代方法:
+*every()*对数组中的每一项运行给定函数，如果该函数对每一项都返回true，则返回true ;
+*some()*对数组中的每一项运行给定函数，如果该函数对任一项返回true，则返回true;
+
+*filter()*对数组中的每一项运行给定函数，返回该函数会返回true的项组成的数组 ;
+*forEach()*对数组中的每一项运行给定函数，这个方法没有返回值 ;
+*map()*对数组中的每一项运行给定函数，返回每次函数调用的结果组成的数组 ;
+
+**以上方法都不会修改数组中的包含值**
+
+```javascript
+var numbers = [1,2,3,4,5,4,3,2,1];        
+var filterResult = numbers.filter(function(item, index, array){
+      return (item > 2);
+        });
+alert(filterResult);   //[3,4,5,4,3]
+```
+
+——————filter()适合查询符合某些条件的所有数组项
+
+```javascript
+var numbers = [1,2,3,4,5,4,3,2,1];
+var mapResult = numbers.map(function(item, index, array){
+            return item * 2;
+        });
+ alert(mapResult);   //[2,4,6,8,10,8,6,4,2]
+```
+
+——————map()适合创建包含的项与另一个数组一一对应的数组
+
+```javascript
+var numbers = [1,2,3,4,5,4,3,2,1];
+number.forEach(function(item,index,array){
+  //执行某些操作
+})
+```
+
+——————forEach()???对数组的每一项运行传入的函数，本质上与使用for循环迭代数组一样。没有返回值
+
+###### 9. 并归方法
+
+*reduce()方法* 和 *reduceRight()归并方法*
+两个方法都会迭代数组的所有项并构建一个最终返回的值
+reduce()归并方法 接受两个参数：
+传入的函数和作为归并基础的初始值(可选）
+要传入的函数接收四个函数，前一个值，当前值，索引项，数组对象
+
+```javascript
+var sum = arr.reduce(function(prev,cur,index,array){
+          return prev + cur;
+});
+alert(sum);
+//reduceRight()归并方法 和reduce()方法本质一样，区别就在于是从后向前开始边里
+var sum2
+=arr.reduceRight(function(pre,cur,index,array){
+         return pre + cur;
+});
+alert(sum2);
+```
+##### 5.3 Date类型
+
+创建：
+
+var now = new Date();
+
+①不传递参数：自动获取当前日期和时间
+
+②传入参数：表示该日期时间的毫米数
+
+为了简化计算过程，有两种方法
+
+- Date.parse()
+
+  没有规定日期格式
+
+```javascript
+  var now = new Date();
+          alert(now);    
+ var someDate = new Date(Date.parse("May 25, 2004"));
+          alert(someDate);//Tue May 25 2004 00:00:00 GMT+0800 (中国标准时间)
+var someDate = new Date("May 25, 2004");//与上等价代码
+```
+
+- Date.UTC()
+
+  年份、*基于0*的月份。。。。。
+
+```javascript
+ //January 1, 2000 at midnight
+var y2k = new Date(Date.UTC(2000, 0));
+        alert(y2k.toUTCString());
+//May 5, 2005 at 5:55:55 PM GMT
+var allFives = new Date(Date.UTC(2005, 4, 5, 17, 55, 55));
+        alert(allFives.toUTCString());
+var allFives = new Date(2005, 4, 5, 17, 55, 55);//省略后则是基于本地时间而非GMT来创建
+```
+
+Date.now()方法：调用这个方法时的日期和时间的毫秒数，可用来分析代码工作
+
+```javascript
+var start=Date.now()
+//do something
+var stop=Date.now();
+var result=stop-start;
+```
+
