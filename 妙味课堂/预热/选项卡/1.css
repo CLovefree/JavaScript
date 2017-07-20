@@ -1,0 +1,143 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+	display: block;
+}
+a{
+	text-decoration: none;
+}
+img{
+	border:none;
+}
+body{
+	margin-top: 100px;
+	font-size: 12px;
+	background: #f0fcff;
+}
+#tab{
+	width: 490px;
+	margin: 0 auto;
+	position: relative;
+	background-color: #fff;
+	border:1px solid #ccc;
+	box-shadow: #ddd 3px 4px 10px 2px;
+}
+#tab .nav{
+	position: relative;
+	z-index: 2;
+}
+/*===============nav相对定位========*/
+#tab .nav ul{
+	box-sizing: border-box;
+	width: 490px;
+	height: 44px;
+	line-height: 44px;
+	border-bottom:1px solid #ccc;
+	background: linear-gradient(to bottom,#fcfcfc,#ebebeb);
+}
+#tab .nav ul li{
+	float: left;
+	height: 44px;
+	line-height: 44px;
+	border-right:1px solid #ccc;
+}
+#tab .nav ul li a{
+	float: left;
+	height: 44px;
+	padding: 0 20px;
+	color: #999;
+}
+/*=====================定位more=====================*/
+#tab .nav .more{
+	position: absolute;
+	right: 20px;
+	top:0px;
+	height: 44px;
+	line-height: 44px;
+	font-family: "宋体";
+}
+#tab .nav .more:hover{
+	font-size: 13px;
+	text-decoration: underline;
+}
+#tab .nav ul li a:hover{
+	box-sizing: border-box;
+	background: linear-gradient(to bottom,#fcfcfc,#f5f5f5);
+	border-bottom:1px solid #ccc;
+}
+#tab .nav ul .active{
+	box-sizing: border-box;
+	background: #f5f5f5;
+	border-bottom:1px solid #ccc;
+	position: relative;
+}
+/* ===================小三角============== */
+#tab .nav ul .active:after{
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	top: 36px;
+	left: 50%;
+	margin-left: -8px;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 8px solid #fff;
+	filter: drop-shadow(0px -1px #ccc); 
+}
+/*===================导航结束===================*/
+#tab .content{
+	position: relative;
+	width: 488px;	
+	overflow: hidden;
+	z-index: 2;
+}
+#tab .content .box{
+	width: 444px;
+	padding: 20px;
+	overflow: hidden;
+}
+#tab .content .box .pic{
+	box-sizing: border-box;
+	width: 189px;
+	height: 115px;
+	float: left;
+	padding-left: 4px;
+	padding-top: 5px;
+	background: linear-gradient(to bottom,#d4cdcd,#f5f5f5);
+	box-shadow: #ddd 3px 4px 10px 2px;
+}
+#tab .content .box .pic_list{
+	float: right;
+	width: 232px;
+	padding-left: 16px;
+	display: inline-block;
+}
+#tab .content .box li{
+	width: 232px;
+	float: left;
+	line-height: 18px;
+	margin-bottom: 4px;
+	margin-left: 4px;
+}
+#tab .pic_list h2{
+	width: 232px;
+	font-size: 12px;
+	height: 18px;
+}
+#tab .pic_list h2 a{
+	color:#333;
+}
+#tab .pic_list span{
+	float: right;
+	height: 18px;
+	color: #999;
+	margin-right: 4px;
+}
+#tab .pic_list p{
+	color:#999;
+	word-spacing: 10px;
+}
