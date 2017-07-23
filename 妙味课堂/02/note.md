@@ -63,7 +63,7 @@
 
   - createElement(标签名)		创建一个节点
 
-  - appendChild(节点)			追加一个节点//告诉它插在哪里，插在最好
+    - appendChild(节点)		追加一个节点//告诉它插在哪里，插在最好
 
     例子：为ul插入li
 
@@ -106,10 +106,11 @@
 
 - 窗口尺寸、工作区尺寸
   - 可视区尺寸-
-    - document.documentElement.clientWidthdocument
-    - documentElement.clientHeight
-  - 滚动距离document.body.scrollTopdocument
-    - documentElement.scrollTop
+    - document.documentElement.clientWidth
+    - document.documentElement.clientHeight
+  - 滚动距离
+    - document.body.scrollTop
+    - document.documentElement.scrollTop
 
 #### 常用方法和事件
 
@@ -121,4 +122,4 @@
   - onload
   - onscroll
   - onresize
-  - 例子：回到顶部按钮、侧边栏广告闪烁问题
+  - 例子：回到顶部按钮、侧边栏广告闪烁问题（非IE6直接用fixed）
