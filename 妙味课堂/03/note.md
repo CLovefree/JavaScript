@@ -40,6 +40,7 @@
   - 例子：提交留言
     - 回车 提交
     - ctrl+回车 提交&&
+- onkeypress=onkeydown+onkeyup
 
 #### 默认行为
 
@@ -53,6 +54,7 @@
   - 例子1.屏蔽右键菜单  oncontextmenu
     - 弹出自定义右键菜单例子
   - 例子2.只能输入数字的输入框
+    - 判断keyCode
     - keydown、keyup事件的区别
 
 #### 拖拽
@@ -60,7 +62,7 @@
 - 简易拖拽
   - 拖拽原理
     - 距离不变     disX和DisY
-    - 三个事件      onmousedown/onmousemuve/onmouseup
+    - 三个事件      onmousedown/onmousemove/onmouseup
 - 靠谱拖拽
   - 原有拖拽的问题//拖快了就按不到了
     - 直接给document加事件
