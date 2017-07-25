@@ -1037,7 +1037,7 @@ alert("Color is now " +color);
 引用类型是一种数据结构，用于将数据和功能组织在一起
 有时也被称为对象定义，因为它们描述的视一类对象所具有的属性和方法
 
-##### 5.1 object类型
+#### 5.1 object类型
 
 创建：
 
@@ -1071,9 +1071,9 @@ alert("Color is now " +color);
   alert(person[propertyName]);
   ```
 
-##### 5.2 Array类型
+#### 5.2 Array类型
 
-###### 创建数组：
+##### 创建数组：
 
 - 使用Array构造函数
 
@@ -1091,7 +1091,7 @@ alert("Color is now " +color);
 
   *注意*：最后一项不加逗号
 
-###### 读取和设置数组：
+##### 读取和设置数组：
 
 - 使用方括号并提供基于0 的索引值
 
@@ -1132,7 +1132,7 @@ alert(colors.length);//100
 
 中间的将返回undefined
 
-###### 1.检测数组
+##### 1.检测数组
 
 确定对象是不是数组
 
@@ -1151,7 +1151,7 @@ if(Array.isArray(value){
 }
 ```
 
-###### 2.转换方法
+##### 2.转换方法
 
 - *toLocaleString()*
 
@@ -1176,7 +1176,7 @@ alert(colors.join(","));      //red,green,blue
 alert(colors.join("||"));     //red||green||blue
 ```
 
-###### 3.栈方法
+##### 3.栈方法
 
 让数组的行为类似其他数据结构的方法；可以限制插入和删除项的数据结构；LIFO**后进先出**
 
@@ -1192,7 +1192,7 @@ var item = colors.pop();        //取得最后一项
  alert(colors.length);  //2
 ```
 
-###### 4.队列方法
+##### 4.队列方法
 
 访问规则：FIFO**先进先出**
 
@@ -1210,7 +1210,7 @@ alert(colors.length);  //2
 
 数组中各项顺序为：black、*red、green*
 
-###### 5.重排序方法
+##### 5.重排序方法
 
 - *reverse（）*-------反转数组顺序
 - *sort（）*--------升序（根据字符串的结果，结果"10"位于"5"的前面）
@@ -1256,7 +1256,7 @@ arr.sort(function(num1,num2){
 alert(arr);
 ```
 
-###### 6.操作方法
+##### 6.操作方法
 
 - *concat()*:基于当前数组中的所有项创建一个新数组
 
@@ -1306,7 +1306,7 @@ var removed = colors.splice(0,1); //删除第一项
 
     splice()方法将在原始数组上增减，返回的为改变的项，原始数组也成为了新的改变后的数组
 
-###### 7.位置方法
+##### 7.位置方法
 
 - *indexOf()* ：从开头（位置0）向后查找
 
@@ -1333,7 +1333,7 @@ var numbers = [1,2,3,4,5,4,3,2,1];
         alert(morePeople.indexOf(person)); //0
 ```
 
-###### 8.迭代方法
+##### 8.迭代方法
 每个方法接收两个参数：要在每一项上运行的*函数*（接收3个参数：数组项的值，该项在数组中的位置，数组对象本身）和（可选的）*运行该函数的作用域对象*——影响this的值
 
 5个迭代方法:
@@ -1375,7 +1375,7 @@ number.forEach(function(item,index,array){
 
 ——————forEach()???对数组的每一项运行传入的函数，本质上与使用for循环迭代数组一样。没有返回值
 
-###### 9. 并归方法
+##### 9. 并归方法
 
 *reduce()方法* 和 *reduceRight()归并方法*
 两个方法都会迭代数组的所有项并构建一个最终返回的值
@@ -1395,9 +1395,9 @@ var sum2
 });
 alert(sum2);
 ```
-##### 5.3 Date类型
+#### 5.3 Date类型
 
-创建：
+##### 创建：
 
 var now = new Date();
 
@@ -1412,7 +1412,7 @@ var now = new Date();
   没有规定日期格式
 
 ```javascript
-  var now = new Date();
+var now = new Date();
           alert(now);    
  var someDate = new Date(Date.parse("May 25, 2004"));
           alert(someDate);//Tue May 25 2004 00:00:00 GMT+0800 (中国标准时间)
@@ -1441,4 +1441,363 @@ var start=Date.now()
 var stop=Date.now();
 var result=stop-start;
 ```
+
+##### 继承
+
+重写方法
+
+toLocaleString(),toString(),在不同浏览器返回格式大相径庭，一般仅用来调试代码
+
+valueOf()不返回字符串，返回毫秒数，可用来比较日期值
+
+```javascript
+var date1 = new Date(2007, 0, 1);       
+var date2 = new Date(2007, 1, 1);     
+       
+        alert(date1 < date2);  //true
+        alert(date1 > date2);  //false
+```
+
+##### 日期格式化
+
+toDateString(),toTimeString(),
+
+toLocalDateString(),toLocalTimeString(),
+
+toUTCString()
+
+##### *日期/事件组件方法*
+
+| 方法                                       | 描述                                |
+| ---------------------------------------- | --------------------------------- |
+| [Date()](http://www.w3school.com.cn/jsref/jsref_Date.asp) | 返回当日的日期和时间。                       |
+| [getDate()](http://www.w3school.com.cn/jsref/jsref_getDate.asp) | 从 Date 对象返回一个月中的某一天 (1 ~ 31)。     |
+| [getDay()](http://www.w3school.com.cn/jsref/jsref_getDay.asp) | 从 Date 对象返回一周中的某一天 (0 ~ 6)。       |
+| [getMonth()](http://www.w3school.com.cn/jsref/jsref_getMonth.asp) | 从 Date 对象返回月份 (0 ~ 11)。           |
+| [getFullYear()](http://www.w3school.com.cn/jsref/jsref_getFullYear.asp) | 从 Date 对象以四位数字返回年份。               |
+| [getYear()](http://www.w3school.com.cn/jsref/jsref_getYear.asp) | 请使用 getFullYear() 方法代替。           |
+| [getHours()](http://www.w3school.com.cn/jsref/jsref_getHours.asp) | 返回 Date 对象的小时 (0 ~ 23)。           |
+| [getMinutes()](http://www.w3school.com.cn/jsref/jsref_getMinutes.asp) | 返回 Date 对象的分钟 (0 ~ 59)。           |
+| [getSeconds()](http://www.w3school.com.cn/jsref/jsref_getSeconds.asp) | 返回 Date 对象的秒数 (0 ~ 59)。           |
+| [getMilliseconds()](http://www.w3school.com.cn/jsref/jsref_getMilliseconds.asp) | 返回 Date 对象的毫秒(0 ~ 999)。           |
+| [getTime()](http://www.w3school.com.cn/jsref/jsref_getTime.asp) | 返回 1970 年 1 月 1 日至今的毫秒数。          |
+| [getTimezoneOffset()](http://www.w3school.com.cn/jsref/jsref_getTimezoneOffset.asp) | 返回本地时间与格林威治标准时间 (GMT) 的分钟差。       |
+| [getUTCDate()](http://www.w3school.com.cn/jsref/jsref_getUTCDate.asp) | 根据世界时从 Date 对象返回月中的一天 (1 ~ 31)。   |
+| [getUTCDay()](http://www.w3school.com.cn/jsref/jsref_getUTCDay.asp) | 根据世界时从 Date 对象返回周中的一天 (0 ~ 6)。    |
+| [getUTCMonth()](http://www.w3school.com.cn/jsref/jsref_getUTCMonth.asp) | 根据世界时从 Date 对象返回月份 (0 ~ 11)。      |
+| [getUTCFullYear()](http://www.w3school.com.cn/jsref/jsref_getUTCFullYear.asp) | 根据世界时从 Date 对象返回四位数的年份。           |
+| [getUTCHours()](http://www.w3school.com.cn/jsref/jsref_getUTCHours.asp) | 根据世界时返回 Date 对象的小时 (0 ~ 23)。      |
+| [getUTCMinutes()](http://www.w3school.com.cn/jsref/jsref_getUTCMinutes.asp) | 根据世界时返回 Date 对象的分钟 (0 ~ 59)。      |
+| [getUTCSeconds()](http://www.w3school.com.cn/jsref/jsref_getUTCSeconds.asp) | 根据世界时返回 Date 对象的秒钟 (0 ~ 59)。      |
+| [getUTCMilliseconds()](http://www.w3school.com.cn/jsref/jsref_getUTCMilliseconds.asp) | 根据世界时返回 Date 对象的毫秒(0 ~ 999)。      |
+| [parse()](http://www.w3school.com.cn/jsref/jsref_parse.asp) | 返回1970年1月1日午夜到指定日期（字符串）的毫秒数。      |
+| [setDate()](http://www.w3school.com.cn/jsref/jsref_setDate.asp) | 设置 Date 对象中月的某一天 (1 ~ 31)。        |
+| [setMonth()](http://www.w3school.com.cn/jsref/jsref_setMonth.asp) | 设置 Date 对象中月份 (0 ~ 11)。           |
+| [setFullYear()](http://www.w3school.com.cn/jsref/jsref_setFullYear.asp) | 设置 Date 对象中的年份（四位数字）。             |
+| [setYear()](http://www.w3school.com.cn/jsref/jsref_setYear.asp) | 请使用 setFullYear() 方法代替。           |
+| [setHours()](http://www.w3school.com.cn/jsref/jsref_setHours.asp) | 设置 Date 对象中的小时 (0 ~ 23)。          |
+| [setMinutes()](http://www.w3school.com.cn/jsref/jsref_setMinutes.asp) | 设置 Date 对象中的分钟 (0 ~ 59)。          |
+| [setSeconds()](http://www.w3school.com.cn/jsref/jsref_setSeconds.asp) | 设置 Date 对象中的秒钟 (0 ~ 59)。          |
+| [setMilliseconds()](http://www.w3school.com.cn/jsref/jsref_setMilliseconds.asp) | 设置 Date 对象中的毫秒 (0 ~ 999)。         |
+| [setTime()](http://www.w3school.com.cn/jsref/jsref_setTime.asp) | 以毫秒设置 Date 对象。                    |
+| [setUTCDate()](http://www.w3school.com.cn/jsref/jsref_setUTCDate.asp) | 根据世界时设置 Date 对象中月份的一天 (1 ~ 31)。   |
+| [setUTCMonth()](http://www.w3school.com.cn/jsref/jsref_setUTCMonth.asp) | 根据世界时设置 Date 对象中的月份 (0 ~ 11)。     |
+| [setUTCFullYear()](http://www.w3school.com.cn/jsref/jsref_setUTCFullYear.asp) | 根据世界时设置 Date 对象中的年份（四位数字）。        |
+| [setUTCHours()](http://www.w3school.com.cn/jsref/jsref_setutchours.asp) | 根据世界时设置 Date 对象中的小时 (0 ~ 23)。     |
+| [setUTCMinutes()](http://www.w3school.com.cn/jsref/jsref_setUTCMinutes.asp) | 根据世界时设置 Date 对象中的分钟 (0 ~ 59)。     |
+| [setUTCSeconds()](http://www.w3school.com.cn/jsref/jsref_setUTCSeconds.asp) | 根据世界时设置 Date 对象中的秒钟 (0 ~ 59)。     |
+| [setUTCMilliseconds()](http://www.w3school.com.cn/jsref/jsref_setUTCMilliseconds.asp) | 根据世界时设置 Date 对象中的毫秒 (0 ~ 999)。    |
+| [toSource()](http://www.w3school.com.cn/jsref/jsref_tosource_boolean.asp) | 返回该对象的源代码。                        |
+| [toString()](http://www.w3school.com.cn/jsref/jsref_toString_date.asp) | 把 Date 对象转换为字符串。                  |
+| [toTimeString()](http://www.w3school.com.cn/jsref/jsref_toTimeString.asp) | 把 Date 对象的时间部分转换为字符串。             |
+| [toDateString()](http://www.w3school.com.cn/jsref/jsref_toDateString.asp) | 把 Date 对象的日期部分转换为字符串。             |
+| [toGMTString()](http://www.w3school.com.cn/jsref/jsref_toGMTString.asp) | 请使用 toUTCString() 方法代替。           |
+| [toUTCString()](http://www.w3school.com.cn/jsref/jsref_toUTCString.asp) | 根据世界时，把 Date 对象转换为字符串。            |
+| [toLocaleString()](http://www.w3school.com.cn/jsref/jsref_toLocaleString.asp) | 根据本地时间格式，把 Date 对象转换为字符串。         |
+| [toLocaleTimeString()](http://www.w3school.com.cn/jsref/jsref_toLocaleTimeString.asp) | 根据本地时间格式，把 Date 对象的时间部分转换为字符串。    |
+| [toLocaleDateString()](http://www.w3school.com.cn/jsref/jsref_toLocaleDateString.asp) | 根据本地时间格式，把 Date 对象的日期部分转换为字符串。    |
+| [UTC()](http://www.w3school.com.cn/jsref/jsref_utc.asp) | 根据世界时返回 1970 年 1 月 1 日 到指定日期的毫秒数。 |
+| [valueOf()](http://www.w3school.com.cn/jsref/jsref_valueOf_date.asp) | 返回 Date 对象的原始值。                   |
+
+##### 5.4 RegExp类型
+
+通过此类型来支持正则表达式
+
+var expression = /pattern/flags；
+
+pattern：任何简单或复杂的正则表达式
+
+flags：匹配模式g,i,m
+
+#### 5.5 function类型
+
+定义函数
+
+```javascript
+函数声明
+function sum(num1,num2){
+return num1+num2;
+};
+函数表达式
+var sum=function(num1,num2){
+return num1+num2;
+};
+```
+
+函数名实际上是一个指向函数对象的指针
+
+```
+...
+var anotherSum=sum;
+```
+
+使用不带圆括号的函数名是访问函数指针，而非调用函数；
+
+anotherSum和sum指向同一个函数
+
+##### 1.没有重载（深入理解）
+
+两个同名函数，后面的函数覆盖前面的函数
+
+ ##### 2.函数声明与函数表达式
+
+上面定义函数的两种方法*区别：*
+
+解析器会率先读取函数声明，即使在调用他的函数后面，JS引擎也能把函数声明提升到顶部，可以访问；
+
+而函数表达式则必须执行到他所在的代码才会被执行，如果放在调用之后会发生错误；
+
+##### 3.作为值得函数
+
+因为函数名本身就是变量，所以函数也可以作为值来使用，
+
+```javascript
+function callSomeFunction(someFunction,someArgument){
+return someFunction(someArgument);
+}
+```
+
+两个参数，一个是函数，一个是传递给函数的值
+
+从一个函数中返回另一个函数，**可以根据某个对象属性对数组进行排序**
+
+比如把比较函数传入到sort（）方法
+
+```javascript
+var data = [{name: "Zachary", age: 28}, {name: "Nicholas", age: 29}];
+           data.sort(createComparisonFunction("name"));
+ alert(data[0].name);  //Nicholas
+```
+
+##### 4.函数内部属性
+
+两个特殊的对象：*arguments*和*this*
+
+*arguments：*类数组对象，包含传入函数中的所有参数。
+arguments对象的*callee属性*，是一个指针，指向**函数**
+arguments.callee：拥有这个arguments对象的函数。
+
+```javascript
+ function factorial(num){
+            if (num <= 1) {
+                return 1;
+            } else {
+                return num * arguments.callee(num-1)
+            }
+        }
+```
+
+阶乘函数，递归算法，arguments.callee是代替factorial函数的，以解除了函数执行时与函数名的耦合！！！
+
+无论函数使用什么名字，这个函数都好使~~~
+
+*this：* 引用的函数是函数据以执行的环境对象——或者说也可以说是this值（当在网页的全局作用域中调用函数时，this对象引用的就是window）
+
+一个函数对象属性*caller* :这个属性保存着调用当前函数的函数的引用，如果实在全局作用域中调用函数时，他的值为null。
+
+```javascript
+function inner(){
+alert(arguments.callee.caller);
+};//调用inner（）函数的函数
+```
+
+##### 5.函数属性和方法
+
+函数是对象，所以函数也有属性和方法
+
+每个函数都包含两个方法属性：
+
+*length* :函数希望接收的<u>命名参数</u>的个数
+
+*prototype* ：耐人寻味。。。。。
+
+每个函数都包含两个方法：
+
+*apply()*:接收两个参数，一个是其中运行函数的作用域，一个是参数数组
+
+*call()*:同上，不同，传递的参数必须逐一列举
+
+**用途** ：扩充函数赖以运行的作用域
+
+```javascript
+window.color = "red";
+        var o = { color: "blue" };
+        
+        function sayColor(){
+            alert(this.color);
+        }
+        
+        sayColor();            //red
+        
+        sayColor.call(this);   //red
+        sayColor.call(window); //red
+        sayColor.call(o);      //blue
+```
+
+*bind* 方法：创建一个函数实例
+
+##### 5.6 基本包装类型
+
+Boolean、Number、String引用类型
+
+##### 6.1 Boolean类型
+
+重写valueOf()、toString()、toLocalString()方法
+建议不用Boolean对象
+
+##### 6.2Number类型
+
+同上重写方法
+
+数值格式化方法
+
+```javascript
+var numberObject = new Number(10);
+var numberValue = 99;
+alert(numberObject.toString());       //"10"
+alert(numberObject.toFixed(2));
+
+ numberObject = new Number(99);
+        alert(numberObject.toPrecision(1));    //"1e+2"
+        alert(numberObject.toPrecision(2));    //"99"
+        alert(numberObject.toPrecision(3));    //"99.0"
+```
+
+toFixed():指定小数位数
+
+toExponential()：返回指数表示法
+
+toPrecision():看情况调用以上哪种方法
+
+##### 6.3 String类型
+
+```javascript
+var stringObject = new String("hello world");
+```
+
+1、字符方法
+
+访问字符串中特定的字符
+
+charAt()和charCodeAt()
+
+2、字符串操作方法
+
+返回拼接的字符串
+
+concat()拼接字符串，但是多用加号操作符就可以
+
+返回被操作字符串的子字符串
+
+slice()：两个参数（开始位置，结束位置（不包含））
+
+substr()：两个参数（开始位置，返回字符个数）
+
+substring()：两个参数（开始位置，结束位置（不包含））
+
+3、字符串位置方法
+
+indexOf():两个参数（开始位置，从哪开始）开头向后
+
+lastindexOf()：两个参数（开始位置，从哪开始）末尾向前
+
+```javascript
+  var stringValue = "hello world";
+        alert(stringValue.indexOf("o"));         //4
+        alert(stringValue.lastIndexOf("o"));     //7
+        alert(stringValue.indexOf("o", 6));         //7
+        alert(stringValue.lastIndexOf("o", 6));     //4   
+```
+
+4、trim()方法
+
+创建一个字符串副本，删除前置和后缀的所有空格，然后返回
+
+5、字符串大小写转换方法
+
+toLowerCase()/toLocalLowerCase()
+
+toUpperCase()/toLocalUpperCase()
+
+6、字符串的模式匹配方法
+
+*看不懂*
+
+7、localeCompare()方法
+
+比较两个字符串，并返回下列值中的一个
+
+8、fromCharCode()方法
+
+接受字符编码，转换成字符串
+
+9、HTML方法
+
+尽量不使用
+
+#### 5.7 单体内置对象
+
+内置对象：由ECMAScript实现提供的、不依赖于宿主环境的对象，这些对象在ECMAScript程序执行前就已经存在了
+
+##### 7.1 Global对象
+
+*eval()方法*像一个完整的ECMAScript解析器，接受一个蚕食，即要执行的ECMAScript字符串
+
+##### 7.2 Math对象
+
+min()和max()方法
+
+舍入方法
+
+- Math.ceil()向上舍入整数
+
+- Math.floor()向下舍入整数
+
+- Math.round()标准舍入整数
+
+random()方法：0-1的随机数
+
+```javascript
+var num = Math.floor(Math.random() * 10 + 1);
+alert(num);    //a number between 1 and 10
+```
+
+selectFrom()：两个参数（应该返回的最小值和最大值）
+
+```javascript
+function selectFrom(lowerValue, upperValue) {
+   var choices = upperValue - lowerValue + 1;
+   return Math.floor(Math.random() * choices + lowerValue);
+}      
+    var num = selectFrom(2, 10);
+    alert(num);   //number between 2 and 10 (inclusive)
+
+     var colors = ["red", "green", "blue", "yellow", "black", "purple", "brown"];
+     var color = colors[selectFrom(0, colors.length-1)];
+     alert(color);  //any of the strings in the array  
+```
+## 第六章：面向对象的程序设计
+
+面向对象OO
+#### 6.1理解对象
 
