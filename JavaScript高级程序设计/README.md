@@ -1613,6 +1613,8 @@ arguments.callee：拥有这个arguments对象的函数。
 
 *this：* 引用的函数是函数据以执行的环境对象——或者说也可以说是this值（当在网页的全局作用域中调用函数时，this对象引用的就是window）
 
+//本质     this：当前的方法，属于谁
+
 一个函数对象属性*caller* :这个属性保存着调用当前函数的函数的引用，如果实在全局作用域中调用函数时，他的值为null。
 
 ```javascript
@@ -1801,3 +1803,14 @@ function selectFrom(lowerValue, upperValue) {
 面向对象OO
 #### 6.1理解对象
 
+```javascript
+       var person = new Object();
+        person.name = "Nicholas";
+        person.age = 29;
+        person.job = "Software Engineer";
+        person.sayName = function(){
+            alert(this.name);
+        };
+        
+        person.sayName();
+```
