@@ -1801,7 +1801,7 @@ function selectFrom(lowerValue, upperValue) {
 ## 第六章：面向对象的程序设计
 
 面向对象OO
-#### 6.1理解对象
+#### 1.理解对象
 
 ```javascript
        var person = new Object();
@@ -1814,3 +1814,164 @@ function selectFrom(lowerValue, upperValue) {
         
         person.sayName();
 ```
+创建自定义对象步骤：
+
+- 创建一个object实例
+- 加上属性和方法
+
+##### 1.1属性类型
+
+两种属性：
+
+- 数据属性
+
+  - [Configurable] : 能否通过delete删除属性重新定义、能否修改属性特性
+  - [Enumberable] ：能否通过for-in循环返回属性
+  - Writeable]：能否修改属性的值
+  - [Value]：属性的数值
+
+  前三者都默认为true
+
+  要修改属性的默认特性
+
+  Object.defineproperty()方法
+
+  ```javascript
+     var person = {};
+          Object.defineProperty(person, "name", {
+            writable: false, //它的值"Nicholas"是只读的
+            configurable: false,//不能从对象中删除
+           
+              value: "Nicholas"
+          });
+
+          alert(person.name);
+          delete person.name;
+          alert(person.name);
+  ```
+
+- 访问器属性
+
+不包含数据值，它们包含一对儿getter和setter函数(都不是必须的)- - 
+
+- 四个特性
+  - [Configurable] : 能否通过delete删除属性重新定义、能否修改属性特性
+  - [Enumberable] ：能否通过for-in循环返回属性
+  - [Get]：在读取属性时调用的函数
+  - [Set]：在写入属性时调用的函数
+
+#####  1.2 定义多个属性
+
+Object.defineproperties( 对象,{.......})      方法
+
+##### 1.3 读取属性的特性
+
+Object.getOwnPropertyDescriptor(对象, "要读取其描述符的属性名称")
+
+#### 2.创建对象
+
+##### 2.1 工厂模式
+
+```javascript
+        function createPerson(name, age, job){
+            var o = new Object();
+            o.name = name;
+            o.age = age;
+            o.job = job;
+            o.sayName = function(){
+                alert(this.name);
+            };    
+            return o;//返回包含三个属性一个方法的对象
+        }
+        
+        var person1 = createPerson("Nicholas", 29, "Software Engineer");
+```
+
+##### 2.2 构造函数模式
+
+```javascript
+        function Person(name, age, job){
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName = sayName;//没有return
+        }//构造函数
+        
+        function sayName(){
+            alert(this.name);
+        }//sayName函数转移到构造函数外，成了全局函数，使新创建的对象通过函数名sayName指针指向同一个函数
+        
+        var person1 = new Person("Nicholas", 29, "Software Engineer"); //创建Person的新实例，必须使用new，调用构造函数
+```
+
+4个步骤
+
+- 创建一个新对象   person1
+- 将构造函数的作用域赋给新对象，所以this指向了新对象
+- 执行构造函数中的代码
+- 返回新对象
+
+**调用构造函数**
+
+```javascript
+var person = new Person("Nicholas", 29, "Software Engineer");
+        person.sayName();   //"Nicholas"
+        
+Person("Greg", 27, "Doctor");  //adds to window
+        window.sayName();   //"Greg"
+//在全局作用域中调用一个函数，this对象总是指向Globle对象     
+ var o = new Object();
+        Person.call(o, "Kristen", 25, "Nurse");
+        o.sayName();    //"Kristen"
+```
+
+任何函数，只要通过new操作符来调用，那它就可以作为构造函数
+
+方法一：构造函数的典型用法；使用new操作符创建一个新对象
+
+方法三：call接收两个参数
+
+- o---运行函数的作用域
+- 一一列举的参数数组
+
+<u>在o的作用域中调用函数，o就拥有所有属性和方法</u>
+
+构造函数的问题：
+
+每个方法都要在每个实例上创造一遍
+
+解决方法：
+
+通过把函数定义转移到构造函数外，每个实例都通过指针指向同一个函数
+
+*新问题* 
+
+##### 2.3 原型模式
+
+创建的每个函数都有一个prototype（原型）属性
+
+prototype就是通过构造函数创建的那个对象实例的原型对象
+
+好处：**让所有对象实例共享它所包含的属性和方法**
+
+不必在构造函数中定义实例的信息，而是将这些信息直接添加到原型对象中
+
+```javascript
+
+ function Person(){
+ }
+        
+ Person.prototype.name = "Nicholas";
+ Person.prototype.age = 29;
+ Person.prototype.job = "Software Engineer";
+ Person.prototype.sayName = function(){
+            alert(this.name);
+ };
+        
+var person1 = new Person();
+var person2 = new Person();//1、2访问的视同一组属性和函数
+ person1.sayName();   //"Nicholas"
+        
+```
+
+*理解原型对象*
