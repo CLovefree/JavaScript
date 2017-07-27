@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数码时钟</title>
+	<style type="text/css">
+		body{
+			background-color: #1B2458;
+			font-size: 60px;
+			color:#fff;
+	</style>
+	<script type="text/javascript">
+	function toDou(n){
+		if(n<10){
+			return '0'+n;
+		}
+		else{
+			return ''+n;
+		}
+	}
+		window.onload=function(){
+			var aImg=document.getElementsByTagName('img');
+
+			function tick(){
+				var oDate=new Date();
+
+				var str=toDou(oDate.getHours())+toDou(oDate.getMinutes())+toDou(oDate.getSeconds());
+				// alert(str);
+				for (var i = 0; i < aImg.length; i++) {
+					aImg[i].src='img/'+str.charAt(i)+'.png';
+				};
+			};
+			setInterval(tick,1000)		//每秒执行一次
+			tick();	//直接执行，不会出现第一秒全0
+		};
+
+	</script>
+</head>
+<body>
+	<img src="img/0.png" alt="">
+	<img src="img/0.png" alt="">
+	:
+	<img src="img/0.png" alt="">
+	<img src="img/0.png" alt="">
+	:
+	<img src="img/0.png" alt="">
+	<img src="img/0.png" alt="">
+</body>
+</html>
