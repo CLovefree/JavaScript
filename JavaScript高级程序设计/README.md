@@ -16,6 +16,8 @@
 - [ ] 字符编码？比较字符编码"23"<"3"
 - [ ] 4.2.1延长作用域链
 - [ ] 5.2.8forEach（）
+- [ ] call()
+- [ ] 6.3.456 寄生组合式继承
 
 ## 第一章：简介
 
@@ -950,7 +952,7 @@ ECMAScript中的参数在内部是用一个数组来表示的；
 - length属性确定传递进来多少个参数
 
 
-```
+```javascript
 function doAdd() {
             if(arguments.length == 1) {
                 alert(arguments[0] + 10);
@@ -1957,8 +1959,7 @@ prototype就是通过构造函数创建的那个对象实例的原型对象
 不必在构造函数中定义实例的信息，而是将这些信息直接添加到原型对象中
 
 ```javascript
-
- function Person(){
+function Person(){
  }
         
  Person.prototype.name = "Nicholas";
@@ -1975,3 +1976,445 @@ var person2 = new Person();//1、2访问的视同一组属性和函数
 ```
 
 *理解原型对象*
+
+- person.prototype→函数的原型对象
+- person.prototype.constructor→prototype属性所在函数的指针即person
+- 实例都包含一个内部属性指向原型，而与构造函数没有直接关系
+- isPropotypeOf()方法
+- getPropotypeOf()方法
+
+
+```javascript
+alert(person.prototype.isPropotypeOf(person1);//true
+//对象之间的关系   
+alert(Object.getPropotypeOf(person1)==Person.prototype
+alert(Object.getPropotypeOf(person1).name;//"Nicholas"
+//返回对象的原型
+```
+
+对象实例添加一个属性，这个属性就会屏蔽原型对象中保存的同名属性//类比CSS
+
+- hasOwnProperty()方法：检测一个属性是否存在实例中true
+- in操作符：通过对象能访问属性就返回true，无论在原型还是实例中
+
+```javascript
+function hasPrototypeProperty(object, name){
+            return !object.hasOwnProperty(name) && (name in object);
+        }
+            
+        function Person(){
+        }
+        
+        Person.prototype.name = "Nicholas";
+        Person.prototype.age = 29;
+        Person.prototype.job = "Software Engineer";
+        Person.prototype.sayName = function(){
+            alert(this.name);
+        };
+        
+        var person = new Person();        
+        alert(hasPrototypeProperty(person, "name"));  //true
+        
+        person.name = "Greg";
+        alert(hasPrototypeProperty(person, "name"));  //false        
+```
+
+- 通过以上方法确定属性存在于原型中还是实例中
+
+  - 原型——true
+  - 实例——false
+
+- 使用for-in循环，返回的是能通过对象访问的、可枚举的属性
+
+- Object.keys(对象)方法：返回包含所有可枚举属性的字符串数组
+
+- Object.getOwnPropertyNames()方法：得到所有实例属性，无论是否可枚举
+
+  - 包括constructor
+  - 上两种方法都可以用来代替for-in
+
+  ###### 对象字面量法重写原型对象
+
+  ```javascript
+  function Person(){
+          }
+   //相当于重写的New Person.prototype       
+          Person.prototype = {
+              name : "Nicholas",
+              age : 29,
+              job: "Software Engineer",
+              sayName : function () {
+                  alert(this.name);
+              }
+          };
+          var friend = new Person();
+  //将Person.prototype 设置为等于一个以对象字面量形式创建的新对象→constructor属性不再指向Person了
+  ```
+
+这种情况下先创建的实例不能得到原型中的属性
+
+*重写原型对象切断了现有原型与人和之前已存在的对象实例之间的联系*
+
+###### 原生对象的原型
+
+通过原生对象的原型，不仅可以取得所有默认方法的引用，而且可以定义新方法，可以修改原型
+
+###### 原生对象的问题
+
+- 共享的本性导致
+
+因为创建的实例指向同一个属性数组
+
+##### 2.4 组合使用构造函数模式和原型模式-常用
+
+*创建自定义类型的最常见方式*
+
+```javascript
+        function Person(name, age, job){
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.friends = ["Shelby", "Court"];
+        }
+ //构造函数模式用于定义实例属性       
+        Person.prototype = {
+            constructor: Person,
+            sayName : function () {
+                alert(this.name);
+            }
+        };
+//原型模式用于定义方法和共享属性        
+        var person1 = new Person("Nicholas", 29, "Software Engineer");
+        var person2 = new Person("Greg", 27, "Doctor");
+        
+        person1.friends.push("Van");
+        
+        alert(person1.friends);    //"Shelby,Court,Van"
+        alert(person2.friends);    //"Shelby,Court"
+        alert(person1.friends === person2.friends);  //false
+        alert(person1.sayName === person2.sayName);  //true
+```
+
+##### 2.5 动态原型模式
+
+检查某个应该存在的方法是否有效，决定是否需要初始化原型
+
+```javascript
+if (typeof this.sayName != "function"){
+            
+                Person.prototype.sayName = function(){
+                    alert(this.name);
+                };
+```
+
+##### 2.6 寄生构造函数模式
+
+创建一个函数，该函数封装创建对象的代码，返回新创建的对象
+
+##### 2.7稳妥构造函数模式
+
+没有公共属性，也不引用this对象，不适用new操作符构造函数
+
+#### 3.继承
+
+​                :arrow_upper_right:接口继承——继承方法签名——ECMAScript不支持
+OO语言
+​                 :arrow_lower_right:实现继承——继承实现方法——ECMAScript—主要依靠原型链
+
+**原型链**
+
+实例→原型对象→构造函数
+
+让原型对象等于另一个类型的实例
+
+```javascript
+ SubType.prototype = new SuperType();
+//继承了SuperType
+```
+
+ ![原型链](原型链.png)
+
+确定原型链和实例的关系
+
+
+
+- 给原型加方法代码一定放在替换原型？？？的语句之后
+
+
+- 通过原型链实现继承时，不能使用对象字面量创建原型方法→这相当于将原型*替换*成对象字面量
+- 包含引用类型值？？？的原型属性会被所有实例共享
+- 在创建子类型的实例，不能像超类型构造函数传递参数
+
+→很少单独使用原型链
+
+##### 3.2 借用构造函数
+
+也叫伪造对象或者经典继承
+
+```javascript
+        function SuperType(){
+            this.colors = ["red", "blue", "green"];
+        }
+
+        function SubType(){  
+            //inherit from SuperType
+            SuperType.call(this);
+        }
+//在子类型构造函数的内部调用超类型构造函数
+//将在新创建的SubType实例的环境下调用SuperType()
+        var instance1 = new SubType();
+        instance1.colors.push("black");
+        alert(instance1.colors);    //"red,blue,green,black"
+        
+        var instance2 = new SubType();
+```
+
+**函数实在特定环境中执行代码的对象**
+
+理解：不是原型链中直接等于，而是在自己的环境借调了构造函数，所以就有了自己的副本，而不影响原来的构造函数
+
+优势：可以再子类型构造函数中向超类型构造函数传递参数
+
+```javascript
+        function SuperType(name){
+            this.name = name;
+        }
+
+        function SubType(){  
+            //继承的同时传递了参数
+            SuperType.call(this, "Nicholas");
+            
+            //instance property
+            this.age = 29;
+        }
+```
+
+缺点：无法避免构造函数模式存在的问题——方法都在构造函数中定义，函数的复用就无从谈起
+
+##### 3.3 组合继承-常用
+
+也叫伪经典继承，将原型链和借用构造函数技术组合→JS中最常用的集成模式
+
+思路：
+
+- 使用原型链实现对*原型属性和方法*的继承
+- 通过借用构造函数实现对*实例属性*的继承
+
+```javascript
+
+        function SubType(name, age){  
+            SuperType.call(this, name);
+            //继承属性
+            this.age = age;
+        }
+        //继承方法
+        SubType.prototype = new SuperType();
+        
+        SubType.prototype.sayAge = function(){
+            alert(this.age);
+        };
+```
+
+##### 3.4 原型式继承
+
+Object.create()方法
+
+两个参数：一个用作新对象原型的对象；一个为新对象定义额外属性的对象
+
+**？？？**
+
+##### 3.5 寄生式继承
+
+##### 3.6 寄生组合式继承
+##第七章：函数表达式
+
+定义函数——两种方式：
+
+- 函数声明
+
+```javascript
+function functionName(arg0,arg1,arg2){
+//函数体
+};
+```
+
+- 函数表达式
+
+```javascript
+var functionName=function(arg0,arg1,arg2){
+//函数体
+};
+```
+
+*匿名函数*，function关键字后面没有标识符，匿名函数的name是空字符串
+
+**函数声明提升**：函数声明与表达式之间的的区别
+
+- 执行代码前先读取函数声明
+
+#### 1.递归
+
+**一个函数通过名字调用自身**
+
+```javascript
+function factorial(num){
+    if (num <= 1){
+        return 1;
+    } else {
+       // return num * factorial(num-1);
+        return num * arguments.callee(num-1);
+  }；
+}//递归阶乘函数
+```
+
+<u>arguments.callee()是一个指向正在执行函数的指针</u>（→严格模式下导致错误）
+
+用它代替函数名可以避免一些再调用函数导致的问题
+
+也可以使用命名函数表达式→严格模式和非严格模式都行
+
+```javascript
+function factorial=(function f(num)){
+    if (num <= 1){
+        return 1;
+    } else {
+        return num * f(num-1);
+});
+```
+
+#### 2.闭包
+
+**什么是闭包？**
+
+1.函数嵌套函数
+2.内部函数可以引用外部函数的参数或者变量，参数和变量不会被垃圾回收机制收回
+
+**好处？**
+
+1.希望一个变量长期驻扎在内存中
+2.避免全局变量的污染
+3.私有成员的存在
+
+**用法 ？**
+
+1.模块化代码
+2.再循环中直接找到对应元素的索引
+
+注意？
+
+IE下会引发内存泄漏 
+
+<u>有权访问另一个函数作用域中的变量的函数</u>
+
+<u></u>内部函数可以访问外部函数的变量→内部函数的作用域链包含外部函数的作用域
+
+理解ing：
+
+函数被调用时发生了神马？
+
+某个函数被调用
+
+ ![创建并调用函数](创建并调用函数.png)
+
+闭包：
+
+
+
+##### 2.1 闭包与变量
+
+后台的每个执行环境都有一个表示变量的对象——变量对象
+
+**闭包只能取得包含函数中任何变量的最后一个值**——闭包保存的是整个变量对象，而不是某个特殊的变量
+
+​    ![闭包](闭包.png)
+
+##### 2.2 关于this对象
+
+this的对象是在运行时基于函数的执行环境绑定的：在全局函数中，this等于window，而当函数被作为某个对象的方法调用时，this等于那个对象
+
+不过匿名函数的执行环境具有全局性，因此其this对象通常指向window
+
+
+
+```javascript
+        var name = "The Window";
+        
+        var object = {
+            name : "My Object",
+        
+            getNameFunc : function(){
+                return function(){
+                    return this.name;
+                };
+            }
+        };
+        
+        alert(object.getNameFunc()());  //"The Window"
+```
+
+每个函数在被调用时都会自动取得两个特殊变量：this和arguments。内部函数在搜索这两个变量时，只会搜索到其活动对象为止，永远不可能访问外部函数中这两个变量
+
+把外部作用域中的this对象保存在**一个闭包能访问的变量**里，就可以让闭包访问该对象了
+
+```javascript
+            var name = "The Window";
+            
+            var object = {
+                name : "My Object",
+            
+                getNameFunc : function(){
+                    var that = this;
+                    return function(){
+                        return that.name;
+                    };
+                }
+            };
+            
+            alert(object.getNameFunc()());  //"MyObject"
+
+```
+
+##### 2.3 内存泄漏
+
+如果闭包的作用域中保存着HTML元素，name就意味着该元素将无法被销毁
+
+```
+通过把element.id的一个副本保存在一个变量，在闭包中引用变量消除循环引用
+最后把element变量设置为null
+```
+
+#### 3.模仿块级作用域
+
+块级作用域通常称为私有作用域
+
+```
+(function(){
+//这里是块级作用域
+})();
+```
+
+以上代码定义并立即调用了一个匿名函数
+
+将函数声明包含在一对圆括号里，表示实际它是一个函数表达式，而紧随其后的圆括号会立即调用这个函数
+
+有什么好处呢？
+
+这样在匿名函数中定义的任何变量，都会在执行结束后销毁
+
+限制向全局作用域中添加过多的变量和函数
+
+#### 4.私有变量
+
+任何函数中定义的变量，都可以认为是私有变量，因为不能在函数的外部访问这些变量
+
+私有变量包括函数的参数、局部变量和在函数内部定义的其他参数
+
+把有权访问私有变量和私有函数的公有方法称为特权方法
+
+闭包
+
+有权访问在构造函数中定义的所有变量和函数
+
+静态私有变量
+
+模块变量曾庆的模块模式
