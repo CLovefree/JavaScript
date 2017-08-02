@@ -725,17 +725,31 @@ num + = 10;
 
 #### 6.语句
 
-ECMA-262规定了一组语句（流控制语句），从本质看，语句定义了ECMAScript中的主要语法，语句通常使用一个或者多个关键词来完成任务。
+ECMA-262规定了一组语句（也叫*流程控制语句*），从本质看，语句定义了ECMAScript中的主要语法，语句通常使用一个或者多个关键词来完成任务。
+
+可以是单行语句，或者{}复合语句，一般叫代码块
 
 ##### 6.1 if语句
 
-if(condition)statament1 else statement2
+结合switch语句
+
+```javascript
+if(condition){//if里面的括号返回的结果转换成布尔值是true的时候
+statament 1
+
+} else{
+statement 2
+}
+```
 
 ##### 6.2 do-while语句
 
+先运行后判断
 后测试循环语句：循环体内的代码至少被执行一次
 
-```
+当while判断为false时，退出循环
+
+```javascript
 do{
 statement
 }while(expression)；
@@ -756,6 +770,8 @@ while(i<10){
 
 前测试循环语句
 
+*具有执行前声明变量和循环后要执行的代码的能力*
+
 ```
 var num = 10; 
         for (var i=1; i < num; i++) {   
@@ -774,9 +790,9 @@ dosomething
 }
 ```
 
-##### 6.5 for-in语句？？？
+##### 6.5 for-in语句
 
-精准的迭代语句，用来枚举对象的属性
+精准的迭代语句，用来枚举*对象*的属性
 
 ```javascript
  for (var propName in window) {
@@ -878,7 +894,7 @@ var url =location. href;
 
 switch语句中的每一种情形case的含义：如果表达式等于这个值value，则执行后面的语句statement；
 
-break语句会导致代码执行流跳出switch语句，避免同时执行多个case;
+*break语句*会导致代码执行流跳出switch语句，避免同时执行多个case;*相当重要*
 
 如果要省略break，表示，混合几种情形，最好添加注释
 
@@ -886,7 +902,7 @@ break语句会导致代码执行流跳出switch语句，避免同时执行多个
  var i = 25;   
         switch (i) {
             case 25: 
-                /* falls through */
+                /* 合并两种情形 */
             case 35: 
                 alert("25 or 35");
                 break;
@@ -973,20 +989,28 @@ function doAdd() {
 
 ECMAScript变量可能包含两种不同数据类型的值：基本类型值和引用类型值
 
-- 基本类型值:源自五种基本数据类型
-  保存在变量中的实际的值
-- 引用类型值
-  保存在内存中的对象
+- **基本类型值**:源自五种基本数据类型
+  保存在变量中的实际的值——栈内存
+
+- **引用类型值** ——堆内存
+  保存在内存中的对象——在栈内存保存一个指针，指向堆内存中的对应引用类型
   可以为其添加、改变、删除属性和方法
-- 复制变量值：复制后是独立的还是引用了同一个对象
-- 传递参数
+
+- 复制变量值：*都只能复制栈内存中的*
+  - 复制后是独立的——基本类型
+  - 还是引用了同一个对象![复制](复制.png)
+
+- 传递参数：参数都是*按值传递*，没有按引用传递功能
+
+  但是有按引用访问的方法
+
 - *二者的不同*
 
 ##### 检测类型
 
 typeof：基本数据类型还是object对象
 
-instanceof操作符:什么类型的对象！！！
+**instanceof操作符**:什么类型的对象！！！
 
 alert（person instanceof Object）；//变量person是Object吗？
 
@@ -1023,10 +1047,10 @@ alert("Color is now " +color);
 - with语句
 
 #####没有块级作用域
-- if语句中的声明变量会将变量添加到当前的执行环境中，而不是if语句后销毁
+- if语句中的声明变量会将变量添加到当前的执行环境中，而不是if语句后销毁。，if花括号没有封闭作用域的功能
 - for语句创建的变量也是依旧存在在循环外部的执行环境中
 - 使用var声明的变量自动被添加到最接近的环境中。函数内部：函数的局部环境；with语句：函数环境；没有var声明：全局环境
-- 向上逐级查询给定名字匹配的标识符
+- *向上逐级*查询给定名字匹配的标识符
 #####垃圾收集机制
 - 找出那些不再使用的变量，然后释放其占用的内存
 - 时间间隔
@@ -1533,6 +1557,8 @@ flags：匹配模式g,i,m
 
 #### 5.5 function类型
 
+函数本身没有运行功能，必须调用才可以执行。
+
 定义函数
 
 ```javascript
@@ -1597,7 +1623,7 @@ var data = [{name: "Zachary", age: 28}, {name: "Nicholas", age: 29}];
 
 *arguments：*类数组对象，包含传入函数中的所有参数。
 arguments对象的*callee属性*，是一个指针，指向**函数**
-arguments.callee：拥有这个arguments对象的函数。
+arguments.callee：拥有这个arguments对象的**函数**。
 
 ```javascript
  function factorial(num){
@@ -1660,18 +1686,53 @@ window.color = "red";
 
 *bind* 方法：创建一个函数实例
 
-##### 5.6 基本包装类型
+#### 5.6 基本包装类型
+
+三个特殊的引用类型。首先是基本类型，然后还是引用类型
+
+```javascript
+var box = 'Lee';//基本数据类型字符串
+alert(box.substring(2));//明显是引用类型写法
+//可以调用系统内置方法
+//不能给自己创建方法和属性
+
+var box = new String('Lee');
+box.age = "100";
+alert(box.age);
+//自定义属性和方法有效
+```
+
+两种写法:系统内置的方法都有用
+
+- 字面量声明写法：自定义无效
+- new运算符声明写法——不建议使用，导致分不清到底是基本类型值还是引用类型值
 
 Boolean、Number、String引用类型
 
 ##### 6.1 Boolean类型
+
+没有特定属性和方法
 
 重写valueOf()、toString()、toLocalString()方法
 建议不用Boolean对象
 
 ##### 6.2Number类型
 
-同上重写方法
+- 有一些静态*属性*（类型.属性）：MAX_VALUE、MIN_VALUE、NaN、。。。
+
+
+- *对象的方法*
+
+  - toFixed():指定小数位数，并转换为字符串，四舍五入
+  - toExponential()：返回指数表示法
+  - toPrecision():看情况调用以上哪种方法
+  - toString()：把数值转换成字符串
+  - toLocalString()：本地化，数值的表示方法
+
+  ```javascript
+  var box = 1000;
+  alert(box.toFixed(2));
+  ```
 
 数值格式化方法
 
@@ -1687,11 +1748,7 @@ alert(numberObject.toFixed(2));
         alert(numberObject.toPrecision(3));    //"99.0"
 ```
 
-toFixed():指定小数位数
 
-toExponential()：返回指数表示法
-
-toPrecision():看情况调用以上哪种方法
 
 ##### 6.3 String类型
 
@@ -1699,31 +1756,59 @@ toPrecision():看情况调用以上哪种方法
 var stringObject = new String("hello world");
 ```
 
+String类型包含了三个属性和大量可用的内置方法
+
+*属性：*
+
+- length：返回字符串的字符长度
+- constructor：返回创建string对象的函数
+- prototype
+
+*方法：*
+
+|                   |                    |                      |
+| ----------------- | ------------------ | -------------------- |
+| 字符方法              | charAt()           | 访问字符串中特定的字符          |
+|                   | charCodeAt()       |                      |
+| 字符串操作方法           | concat()           | 拼接字符串                |
+|                   | slice(n,m)         | 从n到m                 |
+|                   | substring(n,m)     | 从n到m                 |
+|                   | substr(n,m)        | 从n开始的m个              |
+| 字符串位置方法           | indexOf("x",n)     | 从第n个位置搜索，返回"x"的索引值   |
+|                   | lastindexOf("x",n) | 从第n个位置向前搜索，返回"x"的索引值 |
+| 大小写转换方法           | toLowerCase()      |                      |
+|                   | toUpperCase()      |                      |
+| 模式匹配方法            | match("x")         |                      |
+|                   | search("x")        | 返回索引值                |
+|                   | replace("n","m")   | 用n代替m                |
+|                   | *split()*          | 基于分隔符分隔成数组           |
+| localeCompare()方法 | localeCompare(n)方法 | 字母表，n在前返回1           |
+
 1、字符方法
 
 访问字符串中特定的字符
 
-charAt()和charCodeAt()
+- charAt()和charCodeAt()
 
 2、字符串操作方法
 
-返回拼接的字符串
-
-concat()拼接字符串，但是多用加号操作符就可以
+- concat()拼接字符串，但是多用加号操作符就可以
 
 返回被操作字符串的子字符串
 
-slice()：两个参数（开始位置，结束位置（不包含））
+- slice()：两个参数（开始位置，结束位置（不包含））
+- substr()：两个参数（开始位置，返回字符个数）
+- substring()：两个参数（开始位置，结束位置（不包含））
 
-substr()：两个参数（开始位置，返回字符个数）
+负数
 
-substring()：两个参数（开始位置，结束位置（不包含））
+slice（-2）、substr(-2)：总数加负数位
+substring(-2)负数返回全部字符串
 
 3、字符串位置方法
 
-indexOf():两个参数（开始位置，从哪开始）开头向后
-
-lastindexOf()：两个参数（开始位置，从哪开始）末尾向前
+- indexOf():两个参数（开始位置，从哪开始）开头向后
+- lastindexOf()：两个参数（开始位置，从哪开始）末尾向前
 
 ```javascript
   var stringValue = "hello world";
@@ -1740,16 +1825,19 @@ lastindexOf()：两个参数（开始位置，从哪开始）末尾向前
 5、字符串大小写转换方法
 
 toLowerCase()/toLocalLowerCase()
-
 toUpperCase()/toLocalUpperCase()
 
 6、字符串的模式匹配方法
 
-*看不懂*
+match()
+search()
+replace()
+
+split():基于分隔符分隔成数组
 
 7、localeCompare()方法
 
-比较两个字符串，并返回下列值中的一个
+比较两个字符串，并返回下列值中的一个0，1，-1
 
 8、fromCharCode()方法
 
@@ -1765,7 +1853,25 @@ toUpperCase()/toLocalUpperCase()
 
 ##### 7.1 Global对象
 
-*eval()方法*像一个完整的ECMAScript解析器，接受一个蚕食，即要执行的ECMAScript字符串
+其实全局变量和全局函数都是Global的属性和方法，可以用window调用
+
+###### 1.URI编码
+
+对URI编码，以便发送给浏览器
+
+encodeURI()不对特殊字符编码——decodeURI（）对应的解码
+
+encodeURIComponent()更彻底编码——decodeURIComponent()
+
+###### 2.*eval()方法*
+
+像一个完整的ECMAScript**解析器**，接受一个参数，即要执行的**ECMAScript字符串**
+
+功能强大，可以拼装ECMAScript代码，但是可能导致程序安全性！！！
+
+Global对象属性：一些特殊的值（undefined、NaN等)原生引用类型的构造函数
+
+window对象
 
 ##### 7.2 Math对象
 
@@ -1774,9 +1880,7 @@ min()和max()方法
 舍入方法
 
 - Math.ceil()向上舍入整数
-
 - Math.floor()向下舍入整数
-
 - Math.round()标准舍入整数
 
 random()方法：0-1的随机数
@@ -1784,6 +1888,13 @@ random()方法：0-1的随机数
 ```javascript
 var num = Math.floor(Math.random() * 10 + 1);
 alert(num);    //a number between 1 and 10
+```
+
+```javascript
+function select(start,end){
+var total=end-start+1;
+return Math.floor(Math.random()*total+start);
+}
 ```
 
 selectFrom()：两个参数（应该返回的最小值和最大值）
@@ -1800,6 +1911,40 @@ function selectFrom(lowerValue, upperValue) {
      var color = colors[selectFrom(0, colors.length-1)];
      alert(color);  //any of the strings in the array  
 ```
+| 属性                                       | 描述                           |
+| ---------------------------------------- | ---------------------------- |
+| [E](http://www.w3school.com.cn/jsref/jsref_e.asp) | 返回算术常量 e，即自然对数的底数（约等于2.718）。 |
+| [LN2](http://www.w3school.com.cn/jsref/jsref_ln2.asp) | 返回 2 的自然对数（约等于0.693）。        |
+| [LN10](http://www.w3school.com.cn/jsref/jsref_ln10.asp) | 返回 10 的自然对数（约等于2.302）。       |
+| [LOG2E](http://www.w3school.com.cn/jsref/jsref_log2e.asp) | 返回以 2 为底的 e 的对数（约等于 1.414）。  |
+| [LOG10E](http://www.w3school.com.cn/jsref/jsref_log10e.asp) | 返回以 10 为底的 e 的对数（约等于0.434）。  |
+| [PI](http://www.w3school.com.cn/jsref/jsref_pi.asp) | 返回圆周率（约等于3.14159）。           |
+| [SQRT1_2](http://www.w3school.com.cn/jsref/jsref_sqrt1_2.asp) | 返回返回 2 的平方根的倒数（约等于 0.707）。   |
+| [SQRT2](http://www.w3school.com.cn/jsref/jsref_sqrt2.asp) | 返回 2 的平方根（约等于 1.414）。        |
+
+| 方法                                       | 描述                                       |
+| ---------------------------------------- | ---------------------------------------- |
+| [abs(x)](http://www.w3school.com.cn/jsref/jsref_abs.asp) | 返回数的绝对值。                                 |
+| [acos(x)](http://www.w3school.com.cn/jsref/jsref_acos.asp) | 返回数的反余弦值。                                |
+| [asin(x)](http://www.w3school.com.cn/jsref/jsref_asin.asp) | 返回数的反正弦值。                                |
+| [atan(x)](http://www.w3school.com.cn/jsref/jsref_atan.asp) | 以介于 -PI/2 与 PI/2 弧度之间的数值来返回 x 的反正切值。     |
+| [atan2(y,x)](http://www.w3school.com.cn/jsref/jsref_atan2.asp) | 返回从 x 轴到点 (x,y) 的角度（介于 -PI/2 与 PI/2 弧度之间）。 |
+| [ceil(x)](http://www.w3school.com.cn/jsref/jsref_ceil.asp) | 对数进行上舍入。                                 |
+| [cos(x)](http://www.w3school.com.cn/jsref/jsref_cos.asp) | 返回数的余弦。                                  |
+| [exp(x)](http://www.w3school.com.cn/jsref/jsref_exp.asp) | 返回 e 的指数。                                |
+| [floor(x)](http://www.w3school.com.cn/jsref/jsref_floor.asp) | 对数进行下舍入。                                 |
+| [log(x)](http://www.w3school.com.cn/jsref/jsref_log.asp) | 返回数的自然对数（底为e）。                           |
+| [max(x,y)](http://www.w3school.com.cn/jsref/jsref_max.asp) | 返回 x 和 y 中的最高值。                          |
+| [min(x,y)](http://www.w3school.com.cn/jsref/jsref_min.asp) | 返回 x 和 y 中的最低值。                          |
+| [pow(x,y)](http://www.w3school.com.cn/jsref/jsref_pow.asp) | 返回 x 的 y 次幂。                             |
+| [random()](http://www.w3school.com.cn/jsref/jsref_random.asp) | 返回 0 ~ 1 之间的随机数。                         |
+| [round(x)](http://www.w3school.com.cn/jsref/jsref_round.asp) | 把数四舍五入为最接近的整数。                           |
+| [sin(x)](http://www.w3school.com.cn/jsref/jsref_sin.asp) | 返回数的正弦。                                  |
+| [sqrt(x)](http://www.w3school.com.cn/jsref/jsref_sqrt.asp) | 返回数的平方根。                                 |
+| [tan(x)](http://www.w3school.com.cn/jsref/jsref_tan.asp) | 返回角的正切。                                  |
+| [toSource()](http://www.w3school.com.cn/jsref/jsref_tosource_math.asp) | 返回该对象的源代码。                               |
+| [valueOf()](http://www.w3school.com.cn/jsref/jsref_valueof_math.asp) | 返回 Math 对象的原始值。                          |
+
 ## 第六章：面向对象的程序设计
 
 面向对象OO
