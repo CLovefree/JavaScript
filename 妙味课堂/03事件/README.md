@@ -69,4 +69,4 @@
   - FF下，空Div拖拽Bug   
     - 阻止默认事件   return false？
   - 防止拖出页面
-    - 修正位置   左右上下的距离不超出![width](E:\Web前端\练习\JavaScript\妙味课堂\03\width.png)
+    - 修正位置   左右上下的距离不超出
