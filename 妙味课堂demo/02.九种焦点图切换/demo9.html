@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>幻灯片</title>
+<style type="text/css">
+* { padding: 0; margin: 0; }
+li { list-style: none; }
+img { border: none; }
+body { background: #ecfaff; }
+.play { width: 470px; height: 150px; overflow: hidden; position: relative; margin: 150px auto 0; }
+ul { position: absolute; top: 0; left: 0; z-index: 1; }
+ul li { width: 470px;position: absolute;top: 0;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+	var num =  Math.ceil(470/aLi.length);//一个应该多大的距离
+
+	for (var i = 0; i < aLi.length; i++) {
+		aLi[i].style.left = num*i +'px';
+	}
+	for (var i = 0; i < aLi.length; i++) {
+		aLi[i].index = i;
+		aLi[i].onmouseover = function(){
+			for (var i = 0; i < aLi.length; i++) {
+				if(i <= this.index){
+					startMove(aLi[i],{left:i*30} );
+				}
+				else{
+					startMove(aLi[i],{left:(470-120) + (i-1)*30});
+				}
+			}
+		};
+		aLi[i].onmouseout = function(){
+			for (var i = 0; i < aLi.length; i++) {
+				startMove(aLi[i],{left:num*i});
+			};
+		};
+	};
+};
+</script>
+</head>
+<body>
+	<div id="play" class="play">
+		<ul>
+			<li><a href="http://baidu.com"><img src="images/1.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/2.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/3.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/4.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/5.jpg" alt="ad"></a></li>
+		</ul>
+	</div>
+</body>
+</html>

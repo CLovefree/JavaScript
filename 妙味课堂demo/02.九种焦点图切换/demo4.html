@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>幻灯片</title>
+<link rel="stylesheet" type="text/css" href="css.css">
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+
+	var oOl = document.getElementsByTagName('ol')[0];
+	var aBtn = oOl.getElementsByTagName('li');
+
+	var oneHeight = aLi[0].offsetHeight;
+
+
+	for (var i = 0; i < aBtn.length; i++) {
+		aBtn[i].index = i;
+		aBtn[i].onmouseover = function(){
+			for (var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+				// aLi[i].style.display = 'none';
+			}//所有的都还原，再当前active
+
+			this.className = 'active';
+			startMove(oUl,{top:-this.index*oneHeight});//图片上下排列，移动ul
+		}
+	}
+
+};
+</script>
+</head>
+<body>
+	<div id="play" class="play">
+		<ol>
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ol>
+		<ul>
+			<li><a href="http://baidu.com"><img src="images/1.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/2.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/3.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/4.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/5.jpg" alt="ad"></a></li>
+		</ul>
+	</div>
+</body>
+</html>

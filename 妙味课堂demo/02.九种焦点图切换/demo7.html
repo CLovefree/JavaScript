@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>幻灯片</title>
+<style type="text/css">
+* { padding: 0; margin: 0; }
+li { list-style: none; }
+img { border: none; }
+
+body { background: #ecfaff; }
+
+.play { width: 470px; height: 150px; overflow: hidden; position: relative; margin: 150px auto 0; }
+ol { position: absolute; right: 5px; bottom: 5px; z-index: 2; }
+ol li { float: left; margin-right: 3px; display: inline; cursor: pointer; background: #fcf2cf; border: 1px solid #f47500; padding: 2px 6px; color: #d94b01; font-family: arial; font-size: 20px;opacity: 0.8; }
+.active { padding: 3px 8px; font-weight: bold; color: #ffffff; background: #ffb442; position: relative; bottom: 2px; }
+
+ul { position: absolute; top: 0; left: 0; z-index: 1; }
+ul li { width: 470px;position: absolute;top: 0;}
+</style>
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+
+	var oOl = document.getElementsByTagName('ol')[0];
+	var aBtn = oOl.getElementsByTagName('li');
+	var oneWidth = aLi[0].offsetWidth;
+
+	var iNow = 0;
+
+
+	for (var i = 1; i < aLi.length; i++) {
+		aLi[i].style.left = oneWidth +'px';
+	}//初始除了第一张都定位在右边待用
+
+
+	for (var i = 0; i < aBtn.length; i++) {
+		aBtn[i].index = i;
+
+		aBtn[i].onmouseover = function(){
+			for (var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+				//判断当前图是左滑动还是右滑动
+				if (iNow < this.index) {
+					startMove(aLi[iNow],{left:-oneWidth});
+				}else if(iNow > this.index){
+					startMove(aLi[iNow],{left:oneWidth});
+				}
+			}
+			this.className = 'active';//所有的都还原，再当前active
+			//移到哪个按钮，哪个left为0出现		
+			startMove(aLi[this.index],{left:0});
+			iNow = this.index;
+		};
+	}
+};
+</script>
+</head>
+<body>
+	<div id="play" class="play">
+		<ol>
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ol>
+		<ul>
+			<li><a href="http://baidu.com"><img src="images/1.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/2.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/3.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/4.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/5.jpg" alt="ad"></a></li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>幻灯片</title>
+<link rel="stylesheet" type="text/css" href="css.css">
+<script type="text/javascript" src="move.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+
+	var oOl = document.getElementsByTagName('ol')[0];
+	var aBtn = oOl.getElementsByTagName('li');
+
+	var oneHeight = aLi[0].offsetHeight;
+	var iNow = 0;
+	var timer = null;
+
+	var oBox = document.getElementById('play');
+
+
+
+	for (var i = 0; i < aBtn.length; i++) {
+		aBtn[i].index = i;
+		aBtn[i].onmouseover = function(){
+			for (var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+			}//所有的都还原，再当前active
+
+			this.className = 'active';
+			iNow = this.index;//建立iNow与btn关系，这样鼠标移到哪个按钮上，iNow能及时变，自动播放的时候才能从这里继续
+			startMove(oUl,{top:-this.index*oneHeight});//图片上下排列，移动ul
+		}
+	}
+
+	timer = setInterval(toRun,2000);
+	oBox.onmouseover = function(){//在div上加鼠标移入停止运动，这样ul和ol上都管用
+		clearInterval(timer);
+	}
+	oBox.onmouseout = function(){
+		timer = setInterval(toRun,2000);
+	}
+
+	function toRun(){
+		if(iNow == aLi.length-1){//最后一张
+			iNow = 0;
+		}else{
+			iNow++;
+		}
+		for (var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+			}
+		aBtn[iNow].className = 'active';
+		startMove(oUl,{top:-iNow*oneHeight});
+	}
+};
+</script>
+</head>
+<body>
+	<div id="play" class="play">
+		<ol>
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ol>
+		<ul>
+			<li><a href="http://baidu.com"><img src="images/1.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/2.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/3.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/4.jpg" alt="ad"></a></li>
+			<li><a href="http://baidu.com"><img src="images/5.jpg" alt="ad"></a></li>
+		</ul>
+	</div>
+</body>
+</html>
