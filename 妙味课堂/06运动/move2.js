@@ -1,6 +1,3 @@
-/**
- * @author miaov
- */
 function getStyle(obj, attr)
 {
 	if(obj.currentStyle)
