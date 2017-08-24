@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bootstrap轮播图</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<style type="text/css">
+		#myCarousel{
+			width: 470px;
+			height: 150px;
+			margin: 50px auto;
+			position: relative;
+		}
+		.carousel-indicators{
+			position: absolute;
+			bottom: -10px;
+		}
+		.carousel-control{
+			font-size: 60px;
+			line-height: 150px;
+		}
+	</style>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div id="myCarousel" class="carousel slide">
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+			<li data-target="#myCarousel" data-slide-to="4"></li>
+		</ol>   
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="images/1.jpg" alt="First slide">
+			</div>
+			<div class="item">
+				<img src="images/2.jpg" alt="Second slide">
+			</div>
+			<div class="item">
+				<img src="images/3.jpg" alt="Third slide">
+			</div>
+			<div class="item">
+				<img src="images/4.jpg" alt="Forth slide">
+			</div>
+			<div class="item">
+				<img src="images/5.jpg" alt="Fifth slide">
+			</div>
+
+		</div>
+		<a class="carousel-control left" href="#myCarousel" 
+		   data-slide="prev">&lsaquo;</a>
+		<a class="carousel-control right" href="#myCarousel" 
+		   data-slide="next">&rsaquo;</a>
+	</div> 
+</body>
+</html>
