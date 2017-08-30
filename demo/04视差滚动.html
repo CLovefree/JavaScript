@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+			border: 0;
+		}
+		section{
+			width: 100vw;
+			height: 100vh;
+		}
+		section:nth-of-type(1){
+			background-color: #ccc;
+			font-size: 50px;
+			font-family: 'fz';
+			padding: 50px;
+		}
+		section:nth-of-type(2){
+			background-color: #fff888;
+		}
+		section:nth-of-type(3){
+			background-color: #195675;
+		}
+		section:nth-of-type(4){
+			background-color: #199475;
+		}
+		section:nth-of-type(5){
+			background-color: #152365;
+		}
+		section:nth-of-type(6){
+			background-color: #852365;
+		}
+		p{
+			width: 20px;
+			height: 20px;
+			border: 5px solid #fff;
+			border-right-color: transparent;
+			border-bottom-color: transparent;
+			position: fixed;
+			border-radius: 5px;
+			bottom: 0;
+			right: 20px;
+			transform: rotate(45deg);
+	    	filter:drop-shadow(5px 5px 5px black); 
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<section class="page">简介</section>
+		<section class="page page-active">2</section>
+		<section class="page">3</section>
+		<section class="page">4</section>
+		<section class="page">5</section>
+		<section class="page">6</section>
+	</div>
+	<script type="text/javascript">
+		var timer = null;
+		var curPos,nextPos;//当前滚动在什么位置
+		var speed;
+		
+		//停止移动
+		function sc(){
+			clearInterval(timer);
+			timer=null;
+		}
+		
+		//向下移动
+		function moveDown(curElement)
+		{
+			var nextElement = curElement.nextElementSibling;
+			if(nextElement){
+				curElement.className = curElement.className.replace('page-active','');
+				nextElement.className = nextElement.className.trim() + ' page-active';
+				nextPos = nextElement.offsetTop;
+				
+				sc();
+				timer=setInterval("scrollDown()",10);
+			}
+		}
+		function scrollDown()
+		{
+			if(Math.ceil(curPos) >= nextPos)
+			{
+				window.scroll(0, nextPos); 
+				sc();
+				speed=0;
+			}
+			else
+			{
+				speed = (nextPos-curPos) / 15;
+				curPos = curPos + speed;
+				window.scroll(0, curPos);
+			}
+		}
+		
+
+		//向下移动
+		function moveUp(curElement)
+		{
+			var nextElement = curElement.previousElementSibling;//上一个节点
+			if(nextElement){
+				curElement.className = curElement.className.replace('page-active','');
+				nextElement.className = nextElement.className.trim() + ' page-active';
+				nextPos = nextElement.offsetTop;
+				
+				sc();
+				timer=setInterval("scrollUp()",10);
+			}
+		}
+		function scrollUp()
+		{
+			if(Math.round(curPos) <= nextPos)
+			{
+				sc();
+				speed=0;
+			}
+			else
+			{
+				speed = (nextPos-curPos) / 15;
+				curPos = curPos + speed;
+				window.scroll(0, curPos);
+			}
+		}
+		
+		var scrollFunc = function(e){
+			e.preventDefault();
+			if(!timer){
+				var curElement = document.getElementsByClassName('page-active')[0];
+				curPos = curElement.offsetTop;
+				
+				if(e.wheelDelta < 0 || e.detail > 0){
+					//向下
+					//document.body.scrollTop += scrollHeight;
+					moveDown(curElement);
+				}else{
+					//向上
+					//document.body.scrollTop -= scrollHeight;
+					moveUp(curElement);
+				}
+			}
+		};
+		document.body.addEventListener('DOMMouseScroll',scrollFunc);
+		document.body.onmousewheel = scrollFunc;
+	</script>
+	<a href="#" id="top-btn">
+		<p></p>
+	</a>
+</body>
+</html>
